@@ -3,7 +3,7 @@
  * @Author: zhangjingsong
  * @Date: 2020-05-30 20:51:49
  * @Last Modified by: zhangjingsong
- * @Last Modified time: 2020-05-30 22:03:54
+ * @Last Modified time: 2020-05-31 17:35:06
  */
 <template>
   <div class>
@@ -18,7 +18,7 @@ export default {
   provide() {
     return {
       form: this
-    }
+    };
   },
   props: {
     model: {
@@ -37,11 +37,30 @@ export default {
   methods: {
     // 验证表单中所有需要验证的
     validate(cb) {
-      const all = this.$children
-      .filter(item => item.prop)
-      .map(item => item.validate())
+      // 存放所有FormItem孩子
+      const newChildren = []
+      // 递归拿到所有FormItem孩子
+      this.getAllChildren(this.$children, newChildren)
 
-      Promise.all(all).then(() => cb(true)).catch(() => cb(false))
+      const all = newChildren
+        .filter(item => item.prop)
+        .map(item => item.validate());
+
+      Promise.all(all)
+        .then(() => cb(true))
+        .catch(() => cb(false));
+    },
+    // 拿到所有FormItem孩子
+    getAllChildren(children, newChildren) {
+      children.map(item => {
+        let name = item.$options.name
+        if(name === 'FormItem') {
+          newChildren.push(item)
+        }
+        if(item.$children.length > 0) {
+          this.getAllChildren(item.$children, newChildren)
+        }
+      })
     }
   }
 };
