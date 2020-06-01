@@ -3,7 +3,7 @@
  * @Author: zhangjingsong
  * @Date: 2020-05-30 20:57:35
  * @Last Modified by: zhangjingsong
- * @Last Modified time: 2020-05-31 16:44:27
+ * @Last Modified time: 2020-06-01 11:23:07
  */
 <template>
   <div class>
@@ -18,10 +18,14 @@
 
 <script>
 import schema from 'async-validator'
+import emitter from '@/mixins/emitter.js'
+
 export default {
   name: 'FormItem',
+  componentName: 'FormItem',
   components: {},
   inject: ['form'],
+  mixins: [emitter],
   props: {
     prop: String,
     label: String
@@ -38,6 +42,10 @@ export default {
     this.$on('validate', () => {
       this.validate()
     })
+
+    if(this.prop) { // 有指定校验名时才派发事件，将组件实例传递给父级
+      this.dispatch('Form', 'form.add.formItem', [this])
+    }
   },
   methods: {
     // 校验方法

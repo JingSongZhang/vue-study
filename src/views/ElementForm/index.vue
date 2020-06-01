@@ -3,7 +3,7 @@
  * @Author: zhangjingsong
  * @Date: 2020-05-30 20:47:54
  * @Last Modified by: zhangjingsong
- * @Last Modified time: 2020-05-31 17:33:20
+ * @Last Modified time: 2020-06-01 11:13:28
  */
 <template>
   <div class>
@@ -17,15 +17,11 @@
       </Space>
       <Space>
         <form-item label="密码" prop="passWord">
-          <Input v-model="userInfo.passWord" type="password" placeholder="请输入密码" />
+          <Space>
+            <Input v-model="userInfo.passWord" type="password" placeholder="请输入密码" />
+          </Space>
         </form-item>
       </Space>
-      <form-item label="密码" prop="passWord">
-        <Input v-model="userInfo.passWord" type="password" placeholder="请输入密码" />
-      </form-item>
-      <form-item label="密码" prop="passWord">
-        <Input v-model="userInfo.passWord" type="password" placeholder="请输入密码" />
-      </form-item>
       <form-item>
         <button @click="login">登陆</button>
       </form-item>
