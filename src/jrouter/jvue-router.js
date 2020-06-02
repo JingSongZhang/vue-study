@@ -3,7 +3,7 @@
  * @Author: zhangjingsong 
  * @Date: 2020-06-02 16:29:00 
  * @Last Modified by: zhangjingsong
- * @Last Modified time: 2020-06-02 18:00:07
+ * @Last Modified time: 2020-06-02 23:19:16
  */
 // 保存vue构造函数
 let Vue
@@ -17,16 +17,19 @@ class VueRouter {
         // 保存一份options
         this.$options = options
 
+        //建立映射关系
+        this.routeMap = {}
+        options.routes.map(route => {
+            this.routeMap[route.path] = route
+        })
+
         // 监听hashChange事件
         window.addEventListener('hashchange', this.findHash.bind(this))
-        // 设置模板
-        this.findHash()
     }
 
     findHash() {
         console.log('options', this)
         this.current = window.location.hash.slice(1)
-        this.component = this.$options.routes.find(item => item.path === this.current)
     }
 
 }
@@ -47,8 +50,9 @@ VueRouter.install = function(_vue) {
     Vue.component('router-view', {
         render(h) {
             console.log(this.$router)
+            const {routeMap, current} = this.$router
             return h(
-                this.$router.component.component
+                routeMap[current] ? routeMap[current]['component'] : null
             )
         }
     })
