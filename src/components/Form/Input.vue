@@ -6,25 +6,27 @@
  * @Last Modified time: 2020-06-01 11:10:44
  */
 <template>
-  <input :type="inputType" :value="value" v-bind="$attrs" @input="onInput">
+  <div>
+    <input :type="inputType" :value="value" v-bind="$attrs" @input="onInput" />
+  </div>
 </template>
 
 <script>
-import emitter from '@/mixins/emitter.js'
+import emitter from "@/mixins/emitter.js";
 export default {
-  name: 'Input',
+  name: "Input",
   components: {},
+  inheritAttrs: false,
   mixins: [emitter],
   props: {
     inputType: {
       type: String,
-      default: 'text'
+      default: "text"
     },
     value: String
   },
   data() {
-    return {
-    }
+    return {};
   },
   computed: {},
   watch: {},
@@ -32,7 +34,7 @@ export default {
   mounted() {},
   methods: {
     onInput(e) {
-      this.$emit('input', e.target.value)
+      this.$emit("input", e.target.value);
 
       // 第一种向上查找父组件方法
       // let parent = this.$parent || this.$root
@@ -50,8 +52,8 @@ export default {
       // parent.$emit('validate')
 
       // 第二种参考element-ui采用混入的方式向上查找父组件方法
-      this.dispatch('FormItem', 'validate')
+      this.dispatch("FormItem", "validate");
     }
   }
-}
+};
 </script>
