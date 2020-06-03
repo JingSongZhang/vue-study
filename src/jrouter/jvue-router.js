@@ -3,7 +3,7 @@
  * @Author: zhangjingsong 
  * @Date: 2020-06-02 16:29:00 
  * @Last Modified by: zhangjingsong
- * @Last Modified time: 2020-06-02 23:19:16
+ * @Last Modified time: 2020-06-03 16:25:22
  */
 // 保存vue构造函数
 let Vue
@@ -49,8 +49,8 @@ VueRouter.install = function(_vue) {
     // 注册全局组件router-view
     Vue.component('router-view', {
         render(h) {
-            console.log(this.$router)
             const {routeMap, current} = this.$router
+            console.log('com', routeMap[current]['component'])
             return h(
                 routeMap[current] ? routeMap[current]['component'] : null
             )
