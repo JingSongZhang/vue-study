@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    function defineReactive(obj, key, val) {
+
+        Object.defineProperty(obj, key, {
+            get() {
+                console.log('get==>', 'key:', key, '值:', val)
+                return val
+            },
+            set(newVal) {
+                // console.log(newVal)
+                if (newVal !== val) {
+                    console.log('set==>', 'key:', key, '旧值:', val, '新值:', newVal)
+                    val = newVal
+                }
+            }
+        })
+    }
+
+    let obj = {}
+    defineReactive(obj, 'date', new Date().toLocaleTimeString())
+
+    setInterval(() => {
+        app.innerText = obj.date = new Date().toLocaleTimeString() 
+    }, 1000)
+
+</script>
+
+</html>
