@@ -167,11 +167,16 @@ class Compile {
     }
 
     clickUpdate(vm, key, node) {
-        node.addEventListener('click', vm['$methods'][key])
+        node.addEventListener('click', vm['$methods'][key].bind(this))
     }
 
     modelUpdate(vm, key, node) {
         console.log(vm, key, node)
+        node.setAttribute('value', vm[key])
+        node.addEventListener('input', (e) => {
+            console.log(e)
+            vm[key] = e.target.value
+        })
     }
 }
 

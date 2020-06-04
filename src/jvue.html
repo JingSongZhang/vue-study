@@ -11,7 +11,8 @@
     <p @click="add">{{counter}}</p>
     <p j-text="counter"></p>
     <p j-html="desc"></p>
-    <input type="text" j-model="desc">
+    <input type="text" j-model="inp">
+    <p>{{inp}}</p>
   </div>
 
   <script src="./jvue.js"></script>
@@ -21,11 +22,12 @@
       el:'#app',
       data: {
         counter: 1,
-        desc: '<span style="color:red">天王盖地虎</span>'
+        desc: '<span style="color:red">天王盖地虎</span>',
+        inp: '天王盖地虎'
       },
       methods: {
         add() {
-          app.counter++
+          this.counter++
         }
       },
     })
