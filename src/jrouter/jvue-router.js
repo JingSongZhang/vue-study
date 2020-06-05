@@ -3,8 +3,9 @@
  * @Author: zhangjingsong 
  * @Date: 2020-06-02 16:29:00 
  * @Last Modified by: zhangjingsong
- * @Last Modified time: 2020-06-03 16:25:22
+ * @Last Modified time: 2020-06-05 14:26:57
  */
+import render from './router-view-render'
 // 保存vue构造函数
 let Vue
 
@@ -12,26 +13,45 @@ let Vue
 class VueRouter {
     constructor(options) {
         // 创建响应式current
-        Vue.util.defineReactive(this, 'current', '/')
+        // Vue.util.defineReactive(this, 'current', '/')
+        this.current = window.location.hash.slice(1) || '/'
+        Vue.util.defineReactive(this, 'routeArr', [])
 
         // 保存一份options
         this.$options = options
 
+        this.match()
+        console.log(this)
+
         //建立映射关系
-        this.routeMap = {}
-        options.routes.map(route => {
-            this.routeMap[route.path] = route
-        })
+        // this.routeMap = {}
+        // this.$options.routes.map(route => {
+        //     this.routeMap[route.path] = route
+        // })
 
         // 监听hashChange事件
         window.addEventListener('hashchange', this.findHash.bind(this))
     }
 
     findHash() {
-        console.log('options', this)
         this.current = window.location.hash.slice(1)
+        this.match()
     }
 
+    match(routes = this.$options.routes) {
+        routes.map(route => {
+            if(route.path === '/' && this.current === '/') {
+                this.routeArr.push(route)
+            }
+
+            if(route.path !== '/' && this.current.indexOf(route.path) === 0){
+                this.routeArr.push(route)
+                if(route.children) {
+                    this.match(route.children)
+                }
+            }
+        })
+    }
 }
 
 // 实现install
@@ -46,16 +66,13 @@ VueRouter.install = function(_vue) {
         }
     })
 
+    console.log('render==>', this)
+
     // 注册全局组件router-view
     Vue.component('router-view', {
-        render(h) {
-            const {routeMap, current} = this.$router
-            console.log('com', routeMap[current]['component'])
-            return h(
-                routeMap[current] ? routeMap[current]['component'] : null
-            )
-        }
+        render
     })
+
 
     // 注册全局组件router-link
     Vue.component('router-link', {
