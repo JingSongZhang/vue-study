@@ -3,7 +3,7 @@
  * @Author: zhangjingsong 
  * @Date: 2020-06-05 10:20:07 
  * @Last Modified by: zhangjingsong
- * @Last Modified time: 2020-06-05 14:25:29
+ * @Last Modified time: 2020-06-07 11:14:19
  */
 
 export default function render(h) {
@@ -23,10 +23,10 @@ export default function render(h) {
         parent = parent.$parent
     }
 
-    console.log('match===>', this, this.routeArr, dep)
+    console.log('match===>', this, this.$router.routeArr, dep)
 
 
     return h(
-        this.routeArr[dep] ? this.routeArr[dep]['component'] : null
+        this.$router.routeArr[dep] ? this.$router.routeArr[dep]['component'] : null
     )
 }

@@ -21,11 +21,11 @@ Vue.use(VueRouter)
       {
         path: '/about/info',
         name: 'Info',
-        component: Vue.component({
+        component: {
           render(h) {
             return h('div', 'info page')
           }
-        })
+        }
       }
     ]
   }

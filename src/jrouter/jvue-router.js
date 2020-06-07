@@ -3,7 +3,7 @@
  * @Author: zhangjingsong 
  * @Date: 2020-06-02 16:29:00 
  * @Last Modified by: zhangjingsong
- * @Last Modified time: 2020-06-05 14:26:57
+ * @Last Modified time: 2020-06-07 11:17:38
  */
 import render from './router-view-render'
 // 保存vue构造函数
@@ -35,6 +35,7 @@ class VueRouter {
 
     findHash() {
         this.current = window.location.hash.slice(1)
+        this.routeArr = []
         this.match()
     }
 
@@ -83,7 +84,6 @@ VueRouter.install = function(_vue) {
             }
         },
         render(h) {
-            console.log(this.$slot)
             return h(
                 'a',
                 {
