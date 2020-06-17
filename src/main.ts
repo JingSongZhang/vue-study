@@ -4,6 +4,8 @@ import Notice from '@/components/Notice';
 import extend from '@/utils/extend'
 import router from './jrouter'
 import store from './jstore'
+import axios from 'axios'
+Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false
 
